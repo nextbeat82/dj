@@ -1,0 +1,35 @@
+; Hubot systemd service unit template
+; Place in e.g. `/etc/systemd/system/hubot.service`, then `systemctl daemon-reload`, `service hubot start`, and check with `systemctl status -l hubot`
+
+[Unit]
+Description=<enter_info>
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/<hubot_dir>
+User=<hubot_user>
+
+Restart=always
+RestartSec=10
+
+; Configure Hubot environment variables, make sure to use quotes around whitespace.
+Environment=HUBOT_SLACK_TOKEN='xoxb-1234-5678-91011-00e4dd' ;Required for Slack integration
+;Environment=HUBOT_DIR='/home/<hubot_dir>' ;Not necessary because of WorkingDirectory variable above
+;Environment=HUBOT='bin/hubot'
+;Environment=HUBOT_PORT='<desired_port>'
+;Environment=ADAPTER='slack'
+;Environment=HUBOT_NAME='<bot_name>'
+;Environment="HUBOT_SLACK_TEAM='<Customized description>'"
+;Environment=HUBOT_GITHUB_TOKEN='<needd_for_github_integration>'
+;Environment=HUBOT_SLACK_BOTNAME=${HUBOT_NAME}
+;Environment=PORT=${HUBOT_PORT}
+;Environment=HUBOT_LOG_LEVEL=debug ;For verbose logging
+;Environment=HUBOT_USER='hubot';Not necessary because of User variable above
+
+
+ExecStart=/home/<hubot_dir>/bin/hubot --adapter slack
+
+[Install]
+WantedBy=multi-user.target
